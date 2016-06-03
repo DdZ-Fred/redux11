@@ -1,6 +1,6 @@
 import expect from 'expect';
 import deepfreeze from 'deep-freeze';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
 // Todo reducer
 const todo = (state, action) => {
@@ -57,76 +57,17 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
   }
 };
 // App reducer
-const todoApp = (state = {}, action) => {
-  return {
-    todos: todos(state.todos, action),
-    visibilityFilter: visibilityFilter(state.visibilityFilter, action),
-  };
-};
+const todoApp = combineReducers({
+  todos,
+  visibilityFilter,
+});
+// const todoApp = (state = {}, action) => {
+//   return {
+//     todos: todos(state.todos, action),
+//     visibilityFilter: visibilityFilter(state.visibilityFilter, action),
+//   };
+// };
 
-// const testAddTodo = () => {
-//   const stateBefore = [];
-//   const action = {
-//     type: 'ADD_TODO',
-//     id: 0,
-//     text: 'Learn redux',
-//   };
-//   const stateAfter = [
-//     {
-//       id: 0,
-//       text: 'Learn redux',
-//       completed: false,
-//     },
-//   ];
-//
-//   deepfreeze(stateBefore);
-//   deepfreeze(action);
-//
-//   expect(
-//     todos(stateBefore, action)
-//   ).toEqual(stateAfter);
-// };
-// const testToggleTodo = () => {
-//   const stateBefore = [
-//     {
-//       id: 0,
-//       text: 'Learn Redux',
-//       completed: false,
-//     },
-//     {
-//       id: 1,
-//       text: 'Go shopping',
-//       completed: false,
-//     },
-//   ];
-//   const action = {
-//     type: 'TOGGLE_TODO',
-//     id: 1,
-//   };
-//   const stateAfter = [
-//     {
-//       id: 0,
-//       text: 'Learn Redux',
-//       completed: false,
-//     },
-//     {
-//       id: 1,
-//       text: 'Go shopping',
-//       completed: true,
-//     },
-//   ];
-//
-//   deepfreeze(stateBefore);
-//   deepfreeze(action);
-//
-//   expect(
-//     todos(stateBefore, action)
-//   ).toEqual(stateAfter);
-// };
-// testAddTodo();
-// testToggleTodo();
-// console.log('All tests passed');
-//
 const store = createStore(todoApp);
 
 console.log('Initial state:');
